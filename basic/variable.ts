@@ -20,12 +20,10 @@ const today:Date = new Date();
 const tuple:[string, number] = ["Hello", 10];
 
 // 객체
-// | 를 넣으면 or 효과가 있다.
 const obj:object = {};
-const person: {name:string, age:number, stringNum: string|number} = {
+const person: {name:string, age:number} = {
     name:"song",
     age:00,
-    stringNum:"1"
 }
 
 // 진위값

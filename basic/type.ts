@@ -8,5 +8,5 @@ export type TGender = "string";
 type Animal2 = {name: string}
 type Bear2 = Animal2 & {honey: boolean}
 
-  
 // <선언적 확장>은 불가능
+
