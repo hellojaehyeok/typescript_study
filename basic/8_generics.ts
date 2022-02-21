@@ -15,12 +15,27 @@ const _text = numberString("hello");
 
 
 /**
- * 
  * 아래와 같이 generic 타입을 이용하면 함수 호출 시점에서 타입을 정의한다.(확장성이 좋아진다.)
- * 
  */
+// 함수
 function logText<Type>(item: Type): Type {
     return item;
 }
 const text = logText<string>("hello");
 const one = logText<number>(1);
+
+// 인터페이스
+// 인터페이스 이름 뒤에 <T>를 정의하고 원하는 타입에 똑같이 넣으면 된다.
+interface IGenerics<T> {
+    value:T,
+    id:number,
+}
+const genericObjStr: IGenerics<string> = {value:"hello", id:0};
+const genericObjNum: IGenerics<number> = {value:10, id:0};
+
+// generic 타입 제한
+// 제네릭타입 뒤에 []를 붙여 배열로 제한한다.
+function genericArray<T>(item: T[]): T[]{
+    return item;
+}
+genericArray(["hello"])
