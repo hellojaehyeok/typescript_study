@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GREEN, PINK, SKYBLUE } from '../../styles/color';
+import { DARKGRAY, GREEN, PINK, SKYBLUE } from '../../styles/color';
 import { IScheduleData } from '../../type/schedule';
 
-interface ISchduleData{
-    schduleData:IScheduleData[];
+interface IScheduleList{
+    scheduleData:IScheduleData[];
     onClickDelete:(id:number) => void; 
 }
 
@@ -17,17 +17,17 @@ const returnBgColor = (type:string): string => {
     }else if(type==="Game"){
         return GREEN;
     }else{
-        return GREEN;
+        return DARKGRAY;
     }
 }
 
-const ScheduleList = ({schduleData, onClickDelete}: ISchduleData) => {
+const ScheduleList = ({scheduleData, onClickDelete}: IScheduleList) => {
     
 
     return(
         <Container>
             {
-                schduleData.map((item, index) => {
+                scheduleData.map((item, index) => {
                     return (
                         <ScheduleEl key={item.id} bgColor={returnBgColor(item.type)}>
                             <ScheduleContent>

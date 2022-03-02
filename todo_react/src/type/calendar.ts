@@ -4,4 +4,5 @@ export interface ICalendarDate{
     month:number;
     date:number;
     isCurrentMonth:boolean;
+    schedule:number[];
 }
