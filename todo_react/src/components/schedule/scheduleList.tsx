@@ -1,24 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DARKGRAY, GREEN, PINK, SKYBLUE } from '../../styles/color';
+import { ScheduleColor } from '../../styles/color';
 import { IScheduleData } from '../../type/schedule';
 
 interface IScheduleList{
     scheduleData:IScheduleData[];
     onClickDelete:(id:number) => void; 
-}
-
-
-const returnBgColor = (type:string): string => {
-    if(type==="work"){
-        return PINK;
-    }else if(type==="study"){
-        return SKYBLUE;
-    }else if(type==="Game"){
-        return GREEN;
-    }else{
-        return DARKGRAY;
-    }
 }
 
 const ScheduleList = ({scheduleData, onClickDelete}: IScheduleList) => {
@@ -29,7 +16,7 @@ const ScheduleList = ({scheduleData, onClickDelete}: IScheduleList) => {
             {
                 scheduleData.map((item, index) => {
                     return (
-                        <ScheduleEl key={item.id} bgColor={returnBgColor(item.type)}>
+                        <ScheduleEl key={item.id} bgColor={ScheduleColor(item.type)}>
                             <ScheduleContent>
                                 <ScheduleHead>
                                     <ScheduleTitle>{item.title}</ScheduleTitle>

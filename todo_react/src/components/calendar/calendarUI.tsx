@@ -1,24 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DARKGRAY, GREEN, PINK, SKYBLUE } from '../../styles/color';
+import { DARKGRAY, ScheduleColor } from '../../styles/color';
 import { ICalendarDate } from '../../type/calendar';
 import { IScheduleData } from '../../type/schedule';
 
 interface ICalendarUI{
     calendarDate:ICalendarDate[];
     scheduleData:IScheduleData[];
-}
-
-const returnBgColor = (type:string): string => {
-    if(type==="work"){
-        return PINK;
-    }else if(type==="study"){
-        return SKYBLUE;
-    }else if(type==="Game"){
-        return GREEN;
-    }else{
-        return DARKGRAY;
-    }
 }
 
 const CalendarUI = ({calendarDate, scheduleData}: ICalendarUI) => {
@@ -28,14 +16,14 @@ const CalendarUI = ({calendarDate, scheduleData}: ICalendarUI) => {
             {
                 calendarDate.map((item, index) => {
                     return(
-                        <DateEl>
+                        <DateEl key={index}>
                             <DateNum isCurrent={item.isCurrentMonth}>{item.date}</DateNum>
                             {
-                                item.schedule.length ? item.schedule.map((item2, index) => {
+                                item.schedule.length ? item.schedule.map((item2, index2) => {
                                     const schedule = scheduleData.filter(e=>e.id===item2)[0];
-                                    if(!schedule){return <ScheduleBar style={{opacity:item2!==undefined?1:0}}></ScheduleBar>}
+                                    if(!schedule){return <ScheduleBar key={index2} style={{opacity:item2!==undefined?1:0}}></ScheduleBar>}
                                     return(
-                                        <ScheduleBar bgColor={returnBgColor(schedule.type)}></ScheduleBar>
+                                        <ScheduleBar bgColor={ScheduleColor(schedule.type)} key={index2}></ScheduleBar>
                                     )
                                 }):null
                             }
@@ -58,7 +46,7 @@ const Container = styled.div`
 const DateEl =styled.div`
     border: 1px solid ${DARKGRAY}80;
     width: calc(100% / 7);
-    height: 130px;
+    min-height: 130px;
 `
 const DateNum = styled.div<{isCurrent:boolean}>`
     margin: 10px;

@@ -9,7 +9,7 @@ const dummyScheduleData:IScheduleData[] = [
     {
         title:"Work",
         desc:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, laborum odio architecto ipsam quaerat dolorum, numquam tempore laboriosam magni voluptates saepe, dolorem rem eius vitae cumque provident aut distinctio deserunt!",
-        startDate:"2022-03-01 09:00:00",
+        startDate:"2022-02-26 09:00:00",
         endDate:"2022-03-05 09:00:00",
         type:"work",
         id:0,

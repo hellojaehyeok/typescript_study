@@ -6,6 +6,7 @@ import { IScheduleData } from '../../type/schedule';
 import { getCurrentDate, setTimeZero } from '../../utils/parseDate';
 import CalendarUI from './calendarUI';
 import { MakeCalendar } from './makeCalendar';
+import { setSchedule } from './setSchedule';
 
 
 interface ICalendar{
@@ -29,60 +30,10 @@ const Calendar = ({scheduleData}: ICalendar) => {
     // 달력 세팅
     useEffect(() => {
         let newCalendarData: ICalendarDate[] = MakeCalendar(currentDate);
-        for(let i = 0 ; i < newCalendarData.length ; i++){
-            const el = newCalendarData[i];
-            newCalendarData[i].schedule = calcDate(new Date(`${el.year}-${el.month}-${el.date}`), newCalendarData, i);
-        }
+        newCalendarData = setSchedule(scheduleData, newCalendarData);
         setCalendarDate([...newCalendarData]);
     }, [currentDate, scheduleData])
 
-    // 스케줄 계산 (아이디로 계산)
-    const calcDate = (currentDate:Date, calenderArr:any, i:number):Array<number> => {
-        let resultArr:number[] = [];
-        // 스케줄이 해달 날짜에 존하면 넣기
-        scheduleData.map((item, index) => {
-            let startDate:Date = setTimeZero(new Date(item.startDate));
-            let endDate:Date = setTimeZero(new Date(item.endDate));
-
-            if(currentDate >= startDate && currentDate <= endDate){
-                resultArr.push(item.id);
-            }
-        })
-
-        // id를 담을 배열
-        let result:number[] = [];
-
-        // 스케줄이 하나라도 있으면 실행
-        if(resultArr.length!==0){
-            let cpResultArr: any[]= [];
-            resultArr.map(item => cpResultArr.push(""));
-            // 이전 스케줄 체크
-            let prevArr = calenderArr[i-1]?calenderArr[i-1].schedule:[];
-            // 동일한 스케줄 체크 후 해당 인덱스 넣기
-            prevArr.map((item: number) => {
-                if(resultArr.some(item2=>item2===item)){
-                    cpResultArr[prevArr.indexOf(item)] = item; 
-                    resultArr.splice(resultArr.indexOf(item), 1);
-                }
-            })
-
-            // 빈배열에 스케줄 채우기
-            cpResultArr.map((item, index) => {
-                if(item === ""){
-                    cpResultArr[index] = resultArr[0]
-                    resultArr.splice(0, 1);
-                }
-            })
-            
-            // empty 감지
-            for(let i = 0 ; i < cpResultArr.length ; i++){
-                if(cpResultArr[i]==undefined){cpResultArr[i] = undefined}
-            }
-            result=cpResultArr;
-        }   
-    
-        return result;
-    }
 
     return(
         <Container>
