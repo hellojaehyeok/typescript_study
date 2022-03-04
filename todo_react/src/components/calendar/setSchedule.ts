@@ -15,12 +15,13 @@ export const setSchedule = (scheduleData:IScheduleData[], calendarData:ICalendar
                 currentSchedule.push(item.id);
             }
         })
-    
-        if(currentSchedule.length){
-            currentSchedule.map(item => result.push(""));
-            
-            // 이전 스케줄 체크
-            let prevArr = calendarData[i-1]?calendarData[i-1].schedule:[];
+        if(!currentSchedule.length){return []}
+
+        result = Array(currentSchedule.length).fill("");
+        
+        // 이전 스케줄이랑 동일한 index에 스케줄 넣기
+        if(calendarData[i-1]){
+            let prevArr = calendarData[i-1].schedule;
 
             // 동일한 스케줄 체크 후 해당 인덱스 넣기
             prevArr.map((item: number) => {
@@ -29,21 +30,18 @@ export const setSchedule = (scheduleData:IScheduleData[], calendarData:ICalendar
                     currentSchedule.splice(currentSchedule.indexOf(item), 1);
                 }
             })
+        }
     
-            // 빈배열에 스케줄 채우기
-            result.map((item, index) => {
-                if(item === ""){
-                    result[index] = currentSchedule[0]
-                    currentSchedule.splice(0, 1);
-                }
-            })
-            
-            // empty 감지
-            for(let i = 0 ; i < result.length ; i++){
-                if(result[i]==undefined){result[i] = undefined}
+        // 빈배열에 스케줄 채우기 및 empty->undefined 변환
+        // jsx에서 map을 돌릴때 empty이면 순회하지 않는다.
+        for(let i = 0 ; i < result.length ; i++){
+            if(result[i] === ""){
+                result[i] = currentSchedule[0]
+                currentSchedule.splice(0, 1);
+            }else if(!result[i]){
+                result[i] = undefined;
             }
-        }   
-        
+        }
         return result;
     }
 
