@@ -69,4 +69,5 @@ const DateTitle = styled.h2`
 const DateArrow = styled.span`
     margin: 0 10px;
     font-size: 25px;
+    cursor: pointer;
 `

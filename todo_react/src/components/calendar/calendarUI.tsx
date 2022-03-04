@@ -44,7 +44,7 @@ const Container = styled.div`
     border: 1px solid ${DARKGRAY}80;
 `
 const DateEl =styled.div`
-    border: 1px solid ${DARKGRAY}80;
+    /* border: 1px solid ${DARKGRAY}80; */
     width: calc(100% / 7);
     min-height: 130px;
 `

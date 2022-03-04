@@ -8,7 +8,7 @@ const ScheduleColor = (type:string): string => {
         return PINK;
     }else if(type==="study"){
         return SKYBLUE;
-    }else if(type==="Game"){
+    }else if(type==="game"){
         return GREEN;
     }else{
         return DARKGRAY;
