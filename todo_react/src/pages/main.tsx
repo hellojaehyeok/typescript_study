@@ -6,6 +6,8 @@ import AddSchedulePopup from '../components/schedule/AddSchedulePopup';
 import ScheduleList from '../components/schedule/scheduleList';
 import { DARKGRAY } from '../styles/color';
 import {IScheduleData} from '../type/schedule';
+import { useSetRecoilState } from 'recoil';
+import scheduleDataState from '../store/scheduleDataState';
 
 const dummyScheduleData:IScheduleData[] = [
     {
@@ -19,19 +21,13 @@ const dummyScheduleData:IScheduleData[] = [
 ]
 
 const Main = ({}) => {
-    const [scheduleData, setScheduleData] = useState<IScheduleData[]>([]);
+    const setScheduleData = useSetRecoilState(scheduleDataState);
     const [isAddPopup, setIsAddPopup] = useState(false);
 
     // 서버에서 데이터 받기
     useEffect(() => {
         setScheduleData([...dummyScheduleData]);
     }, []);
-
-    // 스케줄 삭제
-    const onClickDelete = (id:number): void => {
-        let newData = scheduleData.filter(el=>el.id!==id);
-        setScheduleData([...newData]);
-    };
 
     // 스케줄 추가
     const onClickAdd = (scheduleEl:IScheduleData): void => {
@@ -51,8 +47,8 @@ const Main = ({}) => {
                 <PlusBtn onClick={() => setIsAddPopup(true)}>+</PlusBtn>
             </TitleWrap>
 
-            <Calendar scheduleData={scheduleData}/> 
-            <ScheduleList scheduleData={scheduleData} onClickDelete={onClickDelete}/>
+            <Calendar /> 
+            <ScheduleList />
         </Container>
     )
 };

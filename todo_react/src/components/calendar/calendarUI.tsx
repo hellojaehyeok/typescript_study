@@ -1,15 +1,16 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import scheduleDataState from '../../store/scheduleDataState';
 import { DARKGRAY, ScheduleColor } from '../../styles/color';
 import { ICalendarDate } from '../../type/calendar';
-import { IScheduleData } from '../../type/schedule';
 
 interface ICalendarUI{
     calendarDate:ICalendarDate[];
-    scheduleData:IScheduleData[];
 }
 
-const CalendarUI = ({calendarDate, scheduleData}: ICalendarUI) => {
+const CalendarUI = ({calendarDate}: ICalendarUI) => {
+    const scheduleData = useRecoilValue(scheduleDataState)
 
     return(
         <Container>

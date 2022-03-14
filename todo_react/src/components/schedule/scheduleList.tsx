@@ -1,15 +1,19 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import scheduleDataState from '../../store/scheduleDataState';
 import { ScheduleColor } from '../../styles/color';
 import { IScheduleData } from '../../type/schedule';
 
-interface IScheduleList{
-    scheduleData:IScheduleData[];
-    onClickDelete:(id:number) => void; 
-}
 
-const ScheduleList = ({scheduleData, onClickDelete}: IScheduleList) => {
-    
+
+const ScheduleList = ({}) => {
+    const [scheduleData, setScheduleData] = useRecoilState(scheduleDataState);
+
+    // 스케줄 삭제
+    const onClickDelete = (id:number): void => {
+        setScheduleData(data => [...data.filter(el=>el.id!==id)] );
+    };
 
     return(
         <Container>

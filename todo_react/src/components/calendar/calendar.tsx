@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components'
+import scheduleDataState from '../../store/scheduleDataState';
 import { DARKGRAY } from '../../styles/color';
 import { ICalendarDate } from '../../type/calendar';
 import { IScheduleData } from '../../type/schedule';
@@ -9,15 +11,13 @@ import { MakeCalendar } from './makeCalendar';
 import { setSchedule } from './setSchedule';
 
 
-interface ICalendar{
-    scheduleData:IScheduleData[];
-}
 
 const today = new Date();
 
-const Calendar = ({scheduleData}: ICalendar) => {
+const Calendar = ({}) => {
     const [calendarDate, setCalendarDate] = useState<ICalendarDate[]>([]);
     const [currentDate, setCurrentDate] = useState(today);
+    const scheduleData = useRecoilValue(scheduleDataState)
 
     // 달력 방향키 클릭
     const onClickDateArrow = (isNext:boolean) :void => {
@@ -43,7 +43,7 @@ const Calendar = ({scheduleData}: ICalendar) => {
                 <DateArrow onClick={() => onClickDateArrow(true)}>&#62;</DateArrow>
             </DateTitle>
 
-            <CalendarUI scheduleData={scheduleData} calendarDate={calendarDate}/>
+            <CalendarUI calendarDate={calendarDate}/>
         </Container>
     )
 
