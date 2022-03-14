@@ -13,14 +13,23 @@
 2. Git Commit Message 변경     
 [깃 커밋 규칙](https://talkwithcode.tistory.com/72?category=1037177)에 맞게 커밋 메시지 입력 
 
-3. 함수형 프로그래밍에 맞게 개발    
-블로그 정리 예정입니다.
+<br /><br />
+
+---
+    
+### 완료
+* to do list 추가, 삭제
+* 달력 구현 및 스케줄에 따른 ui 표시
+* recoil로 스케줄 관리
+
+### 예정사항
+* to do list 수정
 
 
 
 <br /><br />
 
-## 블로그 정리
+### 블로그 정리
 * typescript란 무엇인가
 https://talkwithcode.tistory.com/65
 
