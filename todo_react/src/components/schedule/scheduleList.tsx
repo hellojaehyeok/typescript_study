@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import scheduleDataState from '../../store/scheduleDataState';
 import { ScheduleColor } from '../../styles/color';
-import { IScheduleData } from '../../type/schedule';
 
 
 
 const ScheduleList = ({}) => {
+    const [modifyIndex, setModifyIndex] = useState<number|null>(null);
+    const [modifyDesc, setModifyDesc] = useState("");
     const [scheduleData, setScheduleData] = useRecoilState(scheduleDataState);
 
     // 스케줄 삭제
     const onClickDelete = (id:number): void => {
         setScheduleData(data => [...data.filter(el=>el.id!==id)] );
     };
+
+    // 수정 버튼 클릭
+    const onClickModify = (index:number): void => {
+        setModifyDesc(scheduleData[index].desc);
+        setModifyIndex(index);
+    }
+
+    // 취소 버튼 클릭
+    const onClickCancel = (): void => {
+        setModifyIndex(null);
+    }
+
+    // 완료 버튼 클릭
+    const onClickSubmit = (index:number): void => {
+        let newData = JSON.parse(JSON.stringify(scheduleData));
+        newData[index].desc = modifyDesc;
+        setScheduleData([...newData]);
+        setModifyIndex(null);
+    }
+
 
     return(
         <Container>
@@ -26,10 +47,24 @@ const ScheduleList = ({}) => {
                                     <ScheduleTitle>{item.title}</ScheduleTitle>
                                     <ScheduleDate>{item.startDate} ~ {item.endDate}</ScheduleDate>
                                 </ScheduleHead>
-                                <ScheduleDesc>{item.desc}</ScheduleDesc>    
-                            </ScheduleContent>
+                                {
+                                    modifyIndex == index ?
+                                    <ModifyInput type="text" value={modifyDesc} onChange={e=>setModifyDesc(e.target.value)}/>
+                                    :
+                                    <ScheduleDesc>{item.desc}</ScheduleDesc>    
 
-                            <ScheduleDeleteBtn onClick={() => onClickDelete(item.id)}>X</ScheduleDeleteBtn>
+                                }
+                            </ScheduleContent>
+                            {
+                                modifyIndex == index ?
+                                <>
+                                    <ScheduleControlBtn onClick={onClickCancel}>취소</ScheduleControlBtn>
+                                    <ScheduleControlBtn onClick={() => onClickSubmit(index)}>완료</ScheduleControlBtn>
+                                </>
+                                :
+                                <ScheduleControlBtn onClick={() => onClickModify(index)}>수정</ScheduleControlBtn>
+                            }
+                            <ScheduleControlBtn onClick={() => onClickDelete(item.id)}>X</ScheduleControlBtn>
                         </ScheduleEl>
                     )
                 })
@@ -77,8 +112,12 @@ const ScheduleDesc = styled.div`
     width: 80%;
     word-break: break-all;
 `
-
-const ScheduleDeleteBtn = styled.button`
+const ModifyInput = styled.input`
+    width: 80%;
+    padding: 10px;
+`
+const ScheduleControlBtn = styled.button`
     cursor: pointer;
-    padding: 20px;
+    width: 40px;
+    margin: 0 15px;
 `
